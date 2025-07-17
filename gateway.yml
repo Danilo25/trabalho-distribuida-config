@@ -9,34 +9,36 @@ eureka:
 spring:
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
-      routes:
-        - id: ia-service
-          uri: lb://ia-service
-          predicates:
-            - Path=/ia/**
-          filters:
-            - name: Retry
-              args:
-                retries: 3
-                statuses: BAD_GATEWAY
-                methods: GET, POST
-                backoff:
-                  firstBackoff: 50ms
-                  maxBackoff: 500ms
-                  factor: 2
-                  basedOnPreviousValue: false
-            - name: CircuitBreaker
-              args:
-                name: iaCircuitBreaker
-        
-        - id: mcp-interno
-          uri: lb://MCP-INTERNO
-          predicates:
-            - Path=/mcp/**
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+          routes:
+            - id: ia-service
+              uri: lb://ia-service
+              predicates:
+                - Path=/ia/**
+              filters:
+                - name: Retry
+                  args:
+                    retries: 3
+                    statuses: BAD_GATEWAY
+                    methods: GET, POST
+                    backoff:
+                      firstBackoff: 50ms
+                      maxBackoff: 500ms
+                      factor: 2
+                      basedOnPreviousValue: false
+                - name: CircuitBreaker
+                  args:
+                    name: iaCircuitBreaker
+            
+            - id: mcp-interno
+              uri: lb://MCP-INTERNO
+              predicates:
+                - Path=/mcp/**
 
 resilience4j:
   circuitbreaker:
@@ -47,6 +49,6 @@ resilience4j:
         failureRateThreshold: 50
         waitDurationInOpenState: 10s
         permittedNumberOfCallsInHalfOpenState: 3
-      instances:
-        iaCircuitBreaker:
-          baseconfig: default
+    instances:
+      iaCircuitBreaker:
+        baseConfig: default
