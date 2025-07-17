@@ -18,8 +18,35 @@ spring:
           uri: lb://ia-service
           predicates:
             - Path=/ia/**
+          filters:
+            - name: Retry
+              args:
+                retries: 3
+                statuses: BAD_GATEWAY
+                methods: GET, POST
+                backoff:
+                  firstBackoff: 50ms
+                  maxBackoff: 500ms
+                  factor: 2
+                  basedOnPreviousValue: false
+            - name: CircuitBreaker
+              args:
+                name: iaCircuitBreaker
         
         - id: mcp-interno
           uri: lb://MCP-INTERNO
           predicates:
             - Path=/mcp/**
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+      instances:
+        iaCircuitBreaker:
+          baseconfig: default
