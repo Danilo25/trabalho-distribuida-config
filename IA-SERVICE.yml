@@ -16,3 +16,6 @@ spring:
       embedding:
         options:
           model: nomic-embed-text
+      client:
+        default-options:
+          read-timeout: 600
