@@ -18,8 +18,32 @@ spring:
           uri: lb://ia-service
           predicates:
             - Path=/ia/**
-        
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: iaCircuitBreaker
+                fallbackUri: forward:/fallback/ia
+
         - id: mcp-interno
           uri: lb://MCP-INTERNO
           predicates:
             - Path=/mcp/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: mcpCircuitBreaker
+                fallbackUri: forward:/fallback/mcp
+
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000
+      permittedNumberOfCallsInHalfOpenState: 3
+  instances:
+    mcpCircuitBreaker:
+      baseConfig: default
+    iaCircuitBreaker:
+      baseConfig: default
