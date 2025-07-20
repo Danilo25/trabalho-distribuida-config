@@ -22,21 +22,21 @@ spring:
               uri: lb://ia-service
               predicates:
                 - Path=/ia/**
-              filters:
-                - name: CircuitBreaker
-                  args:
-                    name: iaCircuitBreaker
-                    fallbackUri: forward:/fallback/ia
+              #filters:
+              #  - name: CircuitBreaker
+              #    args:
+              #      name: iaCircuitBreaker
+              #      fallbackUri: forward:/fallback/ia
             
             - id: mcp-interno
               uri: lb://MCP-INTERNO
               predicates:
                 - Path=/mcp/**
-              filters:
-                - name: CircuitBreaker
-                  args:
-                    name: mcpCircuitBreaker
-                    fallbackUri: forward:/fallback/mcp
+              #filters:
+              #  - name: CircuitBreaker
+              #    args:
+              #      name: mcpCircuitBreaker
+              #      fallbackUri: forward:/fallback/mcp
 
 # A configuração do resilience4j permanece a mesma
 resilience4j:
