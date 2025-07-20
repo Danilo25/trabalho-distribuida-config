@@ -9,41 +9,46 @@ eureka:
 spring:
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
-      routes:
-        - id: ia-service
-          uri: lb://ia-service
-          predicates:
-            - Path=/ia/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: iaCircuitBreaker
-                fallbackUri: forward:/fallback/ia
+      # A chave "discovery" foi movida para dentro de "server.webflux"
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+          # A chave "routes" também foi movida
+          routes:
+            - id: ia-service
+              uri: lb://ia-service
+              predicates:
+                - Path=/ia/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: iaCircuitBreaker
+                    fallbackUri: forward:/fallback/ia
+            
+            - id: mcp-interno
+              uri: lb://MCP-INTERNO
+              predicates:
+                - Path=/mcp/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: mcpCircuitBreaker
+                    fallbackUri: forward:/fallback/mcp
 
-        - id: mcp-interno
-          uri: lb://MCP-INTERNO
-          predicates:
-            - Path=/mcp/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: mcpCircuitBreaker
-                fallbackUri: forward:/fallback/mcp
-
-
-resilience4j.circuitbreaker:
-  configs:
-    default:
-      slidingWindowSize: 10
-      failureRateThreshold: 50
-      waitDurationInOpenState: 10000
-      permittedNumberOfCallsInHalfOpenState: 3
-  instances:
-    mcpCircuitBreaker:
-      baseConfig: default
-    iaCircuitBreaker:
-      baseConfig: default
+# A configuração do resilience4j permanece a mesma
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+        permittedNumberOfCallsInHalfOpenState: 3
+    instances:
+      mcpCircuitBreaker:
+        baseConfig: default
+      iaCircuitBreaker:
+        baseConfig: default
