@@ -36,21 +36,21 @@ spring:
 resilience4j:
   retry:
     instances:
-      iaServiceCircuitBreaker:
+      iaCircuitBreaker:
         maxAttempts: 3
         waitDuration: 200ms
   bulkhead:
     instances:
-      iaServiceCircuitBreaker:
+      iaCircuitBreaker:
         maxConcurrentCalls: 10
   ratelimiter:
     instances:
-      iaServiceCircuitBreaker:
+      iaCircuitBreaker:
         limitForPeriod: 5
         limitRefreshPeriod:
   circuitbreaker:
     instances:
-      iaServiceCircuitBreaker:
+      iaCircuitBreaker:
         registerHealthIndicator: true 
         slidingWindowType: COUNT_BASED
         slidingWindowSize: 10 # Número de chamadas para observar
