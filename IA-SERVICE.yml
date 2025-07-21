@@ -21,6 +21,20 @@ spring:
           read-timeout: 600
 
 resilience4j:
+  retry:
+    instances:
+      iaServiceCircuitBreaker:
+        maxAttempts: 3
+        waitDuration: 200ms
+  bulkhead:
+    instances:
+      iaServiceCircuitBreaker:
+        maxConcurrentCalls: 10
+  ratelimiter:
+    instances:
+      iaServiceCircuitBreaker:
+        limitForPeriod: 5
+        limitRefreshPeriod:
   circuitbreaker:
     instances:
       iaServiceCircuitBreaker:
