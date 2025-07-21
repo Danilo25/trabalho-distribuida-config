@@ -48,6 +48,6 @@ resilience4j:
         slidingWindowType: COUNT_BASED
         slidingWindowSize: 10 # Número de chamadas para observar
         failureRateThreshold: 50 # Porcentagem de falhas para abrir o circuito (50%)
-        waitDurationInOpenState: 10000 # Tempo em ms para esperar antes de ir para HALF_OPEN
+        waitDurationInOpenState: 5000 # Tempo em ms para esperar antes de ir para HALF_OPEN
         permittedNumberOfCallsInHalfOpenState: 3 # Número de chamadas de teste em HALF_OPEN
         automaticTransitionFromOpenToHalfOpenEnabled: true
