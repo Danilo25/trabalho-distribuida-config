@@ -34,19 +34,11 @@ spring:
               uri: lb://conversation-service
               predicates:
                 - Path=/conversation-service/**
+
             - id: calendar-service
               uri: lb://calendar-service
               predicates:
                 - Path=/calendar-service/**
-              filters:
-                - StripPrefix=1 
-
-            - id: conversation-service
-              uri: lb://conversation-service
-              predicates:
-                - Path=/conversation-service/**
-              filters:
-                - StripPrefix=1 
               
             - id: ia-service
               uri: lb://ia-service
