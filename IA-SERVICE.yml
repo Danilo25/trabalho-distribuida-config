@@ -5,7 +5,11 @@ management:
   endpoints:
     web:
       exposure:
-        include: "refresh,health"
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
 
 eureka:
   client:
