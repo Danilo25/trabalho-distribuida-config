@@ -29,6 +29,12 @@ spring:
               enabled: true
               lower-case-service-id: true
           routes:
+
+            - id: conversation-service
+              uri: lb://conversation-service
+              predicates:
+                - Path=/conversation-service/**
+              
             - id: ia-service
               uri: lb://ia-service
               predicates:
