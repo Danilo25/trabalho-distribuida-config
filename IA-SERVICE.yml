@@ -1,6 +1,12 @@
 server:
   port: 8081
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "refresh,health"
+
 eureka:
   client:
     service-url:
