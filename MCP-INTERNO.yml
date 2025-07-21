@@ -1,6 +1,16 @@
 server:
   port: 8082
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      show_components: always
+      
 eureka:
   client:
     service-url:

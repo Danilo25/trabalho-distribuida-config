@@ -44,7 +44,7 @@ resilience4j:
   circuitbreaker:
     instances:
       iaServiceCircuitBreaker:
-        registerHealthIndicator: true
+        registerHealthIndicator: true 
         slidingWindowType: COUNT_BASED
         slidingWindowSize: 10 # Número de chamadas para observar
         failureRateThreshold: 50 # Porcentagem de falhas para abrir o circuito (50%)
