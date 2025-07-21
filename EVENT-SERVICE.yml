@@ -1,0 +1,43 @@
+server:
+  port: 8084
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/,http://localhost:8763/eureka/
+
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:h2:mem:eventdb;DB_CLOSE_DELAY=-1
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+
+resilience4j:
+  retry:
+    instances:
+      iaServiceCircuitBreaker:
+        maxAttempts: 3
+        waitDuration: 200ms
+  bulkhead:
+    instances:
+      iaServiceCircuitBreaker:
+        maxConcurrentCalls: 10
+  ratelimiter:
+    instances:
+      iaServiceCircuitBreaker:
+        limitForPeriod: 5
+        limitRefreshPeriod: 10s
+  circuitbreaker:
+    instances:
+      iaServiceCircuitBreaker:
+        registerHealthIndicator: true
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5000ms
+        permittedNumberOfCallsInHalfOpenState: 3
