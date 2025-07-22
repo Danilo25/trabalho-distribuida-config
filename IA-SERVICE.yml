@@ -5,6 +5,9 @@ logging:
   level:
     org.springframework.web: DEBUG
     ufrn.imd.ia: DEBUG
+    org.springframework.cloud.loadbalancer: DEBUG
+    org.springframework.web.client.RestTemplate: DEBUG
+    org.springframework.ai: DEBUG
     
 management:
   tracing:
