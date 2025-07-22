@@ -39,6 +39,7 @@ spring:
           model: nomic-embed-text
       client:
         default-options:
+          uri: http://MCP-INTERNO
           read-timeout: 600
 
 resilience4j:
