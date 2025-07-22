@@ -24,9 +24,9 @@ management:
       show-components: always
 client:
   timeout:
-    response: 120
-    read: 120
-    write: 120
+    response: 600
+    read: 600
+    write: 600
 
 eureka:
   client:
