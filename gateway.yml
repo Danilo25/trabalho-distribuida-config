@@ -30,16 +30,11 @@ spring:
               lower-case-service-id: true
           routes:
 
-            - id: conversation-service
-              uri: lb://conversation-service
+            - id: agenda-service
+              uri: lb://agenda
               predicates:
-                - Path=/conversation-service/**
-
-            - id: calendar-service
-              uri: lb://calendar-service
-              predicates:
-                - Path=/calendar-service/**
-              
+                - Path=/agenda/**
+                
             - id: ia-service
               uri: lb://ia-service
               predicates:
