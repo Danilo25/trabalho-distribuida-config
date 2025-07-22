@@ -1,0 +1,47 @@
+server:
+  port: 8083
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/,http://localhost:8763/eureka/
+      
+resilience4j:
+  retry:
+    instances:
+      MicroServiceIACircuitBreaker:
+        maxAttempts: 3
+        waitDuration: 200ms
+  bulkhead:
+    instances:
+      MicroServiceIACircuitBreaker:
+        maxConcurrentCalls: 10
+  ratelimiter:
+    instances:
+      MicroServiceIACircuitBreaker:
+        limitForPeriod: 5
+        limitRefreshPeriod: 1s
+        timeoutDuration: 0
+  circuitbreaker:
+    instances:
+      MicroServiceIACircuitBreaker:
+        registerHealthIndicator: true
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5000ms # 5 segundos
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
