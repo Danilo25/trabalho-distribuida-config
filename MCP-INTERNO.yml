@@ -1,6 +1,17 @@
 server:
   port: 8082
-
+  
+ai:
+    mcp:
+      server:
+        stdio: false
+        enabled: true
+        type: SYNC
+        name: MCP-INTERNO
+        version: 1.0.0
+        sse-endpoint: /sse
+        sse-message-endpoint: /mcp/messages
+        
 management:
   tracing:
     sampling:
