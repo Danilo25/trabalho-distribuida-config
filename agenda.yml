@@ -53,6 +53,6 @@ resilience4j:
         slidingWindowType: COUNT_BASED
         slidingWindowSize: 10
         failureRateThreshold: 50
-        waitDurationInOpenState: 5000ms # 5 segundos
+        waitDurationInOpenState: 5000ms
         permittedNumberOfCallsInHalfOpenState: 3
         automaticTransitionFromOpenToHalfOpenEnabled: true
