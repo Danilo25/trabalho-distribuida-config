@@ -13,6 +13,11 @@ management:
     health:
       show-details: always
       show-components: always
+client:
+  timeout:
+    response: 60
+    read: 60
+    write: 60
 
 eureka:
   client:
