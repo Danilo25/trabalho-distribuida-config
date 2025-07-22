@@ -17,46 +17,31 @@ management:
   endpoint:
     health:
       show-details: always
-      show_components: always
+      show-components: always
 
 spring:
   cloud:
     gateway:
-      server:
-        webflux:
-          discovery:
-            locator:
-              enabled: true
-              lower-case-service-id: true
-          routes:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: agenda-service
+          uri: lb://agenda
+          predicates:
+            - Path=/agenda/**
+          filters:
+            - RewritePath=/agenda/(?<segment>.*), /agenda/$\{segment}
 
-            - id: agenda-service
-              uri: lb://agenda
-              predicates:
-                - Path=/agenda/**
-              filters:
-              - RewritePath=/agenda/(?<segment>.*), /agenda/$\{segment}
-                
-            - id: ia-service
-              uri: lb://ia-service
-              predicates:
-                - Path=/ia/**
-            
-            - id: mcp-interno
-              uri: lb://MCP-INTERNO
-              predicates:
-                - Path=/mcp/**
-
-resilience4j:
-  circuitbreaker:
-    configs:
-      default:
-        slidingWindowSize: 10
-        failureRateThreshold: 50
-        waitDurationInOpenState: 10000
-        permittedNumberOfCallsInHalfOpenState: 3
-    instances:
-      mcpCircuitBreaker:
-        baseConfig: default
-      iaCircuitBreaker:
-        baseConfig: default
+        - id: ia-service
+          uri: lb://ia-service
+          predicates:
+            - Path=/ia/**
+          filters:
+            - RewritePath=/ia/(?<segment>.*), /ia/$\{segment}
+        
+        - id: mcp-interno
+          uri: lb://MCP-INTERNO
+          predicates:
+            - Path=/mcp/**
