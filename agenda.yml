@@ -18,11 +18,12 @@ management:
     health:
       show-details: always
       show-components: always
-client:
-  timeout:
-    response: 600
-    read: 600
-    write: 600
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 600000
 
 eureka:
   client:
