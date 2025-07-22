@@ -1,10 +1,6 @@
 server:
   port: 8083
 
-spring:
-  main:
-    web-application-type: servlet
-
 logging:
   level:
     org.springframework.web: DEBUG
